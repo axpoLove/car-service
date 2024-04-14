@@ -11,7 +11,7 @@
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/some_name/car-api-service.git
+   git clone https://github.com/axpoLove/car-api-service.git
    cd car-api-service
 2. rename .env.example to .env and set all variables
 3. run the following commands to run service
