@@ -1,0 +1,200 @@
+basePath: /
+definitions:
+  car.AddCarRequest:
+    properties:
+      reg_nums:
+        items:
+          type: string
+        type: array
+    type: object
+  car.DeleteCarRequest:
+    properties:
+      reg_num:
+        type: string
+    type: object
+  car.GetCarsRequest:
+    properties:
+      limit:
+        type: integer
+      mark:
+        type: string
+      model:
+        type: string
+      owner:
+        $ref: '#/definitions/models.Person'
+      page:
+        type: integer
+      reg_num:
+        type: string
+      year:
+        type: integer
+    type: object
+  car.GetCarsResponse:
+    properties:
+      cars:
+        items:
+          $ref: '#/definitions/models.CarInfo'
+        type: array
+      page:
+        type: integer
+      total:
+        type: integer
+    type: object
+  car.UpdateCarRequest:
+    properties:
+      mark:
+        type: string
+      model:
+        type: string
+      owner:
+        $ref: '#/definitions/models.Person'
+      reg_num:
+        type: string
+      year:
+        type: integer
+    type: object
+  car.emptyResponse:
+    type: object
+  models.CarInfo:
+    properties:
+      mark:
+        type: string
+      model:
+        type: string
+      owner:
+        $ref: '#/definitions/models.Person'
+      reg_num:
+        type: string
+      year:
+        type: integer
+    type: object
+  models.Person:
+    properties:
+      name:
+        type: string
+      patronymic:
+        type: string
+      surname:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: '''This is a car api server'''
+  title: car-api
+  version: "1.0"
+paths:
+  /car:
+    delete:
+      consumes:
+      - application/json
+      description: delete car
+      operationId: delete-car
+      parameters:
+      - description: reg num
+        in: body
+        name: regNum
+        required: true
+        schema:
+          $ref: '#/definitions/car.DeleteCarRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/car.emptyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: delete car
+    patch:
+      consumes:
+      - application/json
+      description: update car
+      operationId: update-car
+      parameters:
+      - description: car info for update
+        in: body
+        name: CarInfo
+        required: true
+        schema:
+          $ref: '#/definitions/car.UpdateCarRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/car.emptyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: update car
+  /cars:
+    get:
+      consumes:
+      - application/json
+      description: get cars
+      operationId: get-cars
+      parameters:
+      - description: filter for car list
+        in: body
+        name: Filter
+        required: true
+        schema:
+          $ref: '#/definitions/car.GetCarsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/car.GetCarsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: get cars
+    post:
+      consumes:
+      - application/json
+      description: add cars
+      operationId: add-cars
+      parameters:
+      - description: reg num list
+        in: body
+        name: regNums
+        required: true
+        schema:
+          $ref: '#/definitions/car.AddCarRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/car.emptyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: add cars
+swagger: "2.0"

@@ -1,0 +1,57 @@
+basePath: /
+definitions:
+  models.CarInfo:
+    properties:
+      mark:
+        type: string
+      model:
+        type: string
+      owner:
+        $ref: '#/definitions/models.Person'
+      reg_num:
+        type: string
+      year:
+        type: integer
+    type: object
+  models.Person:
+    properties:
+      name:
+        type: string
+      patronymic:
+        type: string
+      surname:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: '''This is a car info api server'''
+  title: car-info-api
+  version: "1.0"
+paths:
+  /info:
+    get:
+      description: get car info
+      operationId: get-car-info
+      parameters:
+      - description: car reg number
+        in: query
+        name: regNum
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CarInfo'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: get car info
+swagger: "2.0"
